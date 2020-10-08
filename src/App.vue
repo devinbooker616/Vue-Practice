@@ -17,12 +17,29 @@
 import Header from "./components/Header.vue";
 import QuestionBox from "./components/QuestionBox.vue";
 import Nav from "./components/Nav.vue";
+
 export default {
   name: "App",
   components: {
     Nav,
     Header,
     QuestionBox,
+  },
+  data() {
+    return {
+      question: [],
+    };
+  },
+  mounted: function() {
+    fetch("https://opentdb.com/api.php?amount=10&category=9&type=multiple", {
+      method: "get",
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonData) => {
+        this.question = jsonData.results;
+      });
   },
 };
 </script>
